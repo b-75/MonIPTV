@@ -18,23 +18,28 @@ android {
         versionName = "1.0.$buildNumber"
     }
 
+    // Clé de signature privée : fournie uniquement par les "Secrets" GitHub, jamais stockée dans le dépôt.
+    // Elle prouve que les mises à jour viennent bien de toi.
+    val keystorePath = System.getenv("SIGNING_KEYSTORE")
+    val keystorePassword = System.getenv("SIGNING_PASSWORD")
+    val hasReleaseKey = !keystorePath.isNullOrBlank() && !keystorePassword.isNullOrBlank()
+
     signingConfigs {
-        create("perso") {
-            // Clé de signature fixe : permet d'installer les mises à jour par-dessus l'ancienne version
-            storeFile = file("moniptv.keystore")
-            storePassword = "moniptv"
-            keyAlias = "moniptv"
-            keyPassword = "moniptv"
+        if (hasReleaseKey) {
+            create("perso") {
+                storeFile = file(keystorePath!!)
+                storeType = "PKCS12"
+                storePassword = keystorePassword
+                keyAlias = "moniptv"
+                keyPassword = keystorePassword
+            }
         }
     }
 
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("perso")
-        }
-        getByName("debug") {
-            signingConfig = signingConfigs.getByName("perso")
+            if (hasReleaseKey) signingConfig = signingConfigs.getByName("perso")
         }
     }
 

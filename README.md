@@ -9,7 +9,13 @@ Appli IPTV personnelle pour Android TV (Freebox Pop / Mini 4K, Fire TV, Google T
 - **Films** et **Séries** avec affiches, saisons/épisodes et reprise de lecture là où tu t'étais arrêté
 - Sources acceptées : identifiants **Xtream Codes** ou lien **M3U** (+ guide XMLTV facultatif)
 
-Tes identifiants restent uniquement sur ta box : ils ne sont jamais dans ce dépôt.
+Tes identifiants restent uniquement sur ta box (et sont exclus des sauvegardes Google) : ils ne sont jamais dans ce dépôt.
+
+## Sécurité
+L'appli est signée avec une clé privée stockée dans les **Secrets** GitHub du dépôt
+(`KEYSTORE_BASE64` et `KEYSTORE_PASSWORD`, dans Settings → Secrets and variables → Actions).
+Garde une copie de cette clé en lieu sûr : sans elle, impossible de publier une mise à jour
+installable par-dessus l'appli existante.
 
 ## Installer sur la Freebox
 1. Sur la Freebox, installe l'appli **Downloader** (by AFTVnews) depuis le Play Store.

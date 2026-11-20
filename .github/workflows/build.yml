@@ -23,8 +23,31 @@ jobs:
         with:
           gradle-version: "8.9"
 
+      - name: Préparer la clé de signature (Secrets GitHub)
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ] || [ -z "$KEYSTORE_PASSWORD" ]; then
+            echo "::error::Les secrets KEYSTORE_BASE64 et KEYSTORE_PASSWORD sont manquants (Settings > Secrets and variables > Actions)."
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.p12"
+          echo "SIGNING_KEYSTORE=$RUNNER_TEMP/release.p12" >> "$GITHUB_ENV"
+
       - name: Compiler l'APK
+        env:
+          SIGNING_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: gradle :app:assembleRelease --stacktrace
+
+      - name: Vérifier que l'APK est bien signé
+        run: |
+          APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
+          "$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk | head -3
+
+      - name: Effacer la clé
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.p12"
 
       - name: Renommer
         run: cp app/build/outputs/apk/release/app-release.apk MonIPTV.apk
