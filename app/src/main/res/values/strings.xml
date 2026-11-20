@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ====== PERSONNALISATION : le nom de ton appli ====== -->
+    <string name="app_name">Mon IPTV</string>
+
+    <string name="menu_live">TV en direct</string>
+    <string name="menu_movies">Films</string>
+    <string name="menu_series">Séries</string>
+    <string name="menu_favorites">Favoris</string>
+    <string name="menu_settings">Réglages</string>
+    <string name="loading">Chargement…</string>
+</resources>

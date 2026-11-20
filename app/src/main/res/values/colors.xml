@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ====== PERSONNALISATION : change ces couleurs pour changer le look de l'appli ====== -->
+<resources>
+    <color name="bg">#0B1020</color>
+    <color name="surface">#161D33</color>
+    <color name="surface_focus">#24305A</color>
+    <color name="accent">#4F8CFF</color>
+    <color name="accent_soft">#334F8CFF</color>
+    <color name="text">#F2F4FA</color>
+    <color name="text_dim">#9AA3BF</color>
+    <color name="live_red">#FF4D5E</color>
+    <color name="overlay">#CC05070F</color>
+    <color name="black">#000000</color>
+</resources>
